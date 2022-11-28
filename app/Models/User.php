@@ -9,6 +9,7 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Webpatser\Uuid\Uuid;
 
+
 class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
@@ -43,14 +44,4 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public static function boot() {
-        parent::boot();
-        self::creating(function($model) {
-            $model->id = (string) Uuid::generate();
-        });
-
-    }
-    
-    protected $keyType = 'string';
-    public $incrementing = false;
 }
