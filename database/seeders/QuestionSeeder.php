@@ -63,7 +63,7 @@ class QuestionSeeder extends Seeder
         foreach($questions as $question) {
             $newQuestion = Question::updateOrCreate(['name' => $question['name']]);
             foreach($question['options'] as $option) {
-                QuestionOption::updateOrCreate(['questions_id' => $newQuestion->id, 'value' => $option]);
+                $newQuestion->options()->updateOrCreate(['name' => $option]);
             }
         }
     }

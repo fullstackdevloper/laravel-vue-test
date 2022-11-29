@@ -54,3 +54,9 @@
         </form>
     </x-auth-card>
 </x-guest-layout>
+<script>
+    (function() {
+   localStorage.removeItem('token');
+
+})();
+    </script>

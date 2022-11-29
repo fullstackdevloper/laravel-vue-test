@@ -2,7 +2,7 @@ import { createRouter, createWebHistory } from "vue-router";
 
 import login from '../components/auth/login.vue' 
 import register from '../components/auth/register.vue' 
-import survey from '../components/survey/index.vue' 
+import survey from '../components/dashboard/index.vue' 
 
 const routes = [
     {
@@ -45,7 +45,7 @@ router.beforeEach((to, from, next) => {
   
     if (localStorage.getItem('token') && localStorage.getItem('expires_at')) {
       const expiresAt = localStorage.getItem('expires_at') ? localStorage.getItem('expires_at') : 0;
-      routerAuthCheck = new Date().getTime() < expiresAt;
+      routerAuthCheck = new Date().getTime() >= new Date(expiresAt);
     }
   
     if (requiresAuth) {
@@ -54,7 +54,7 @@ router.beforeEach((to, from, next) => {
       }
     }
   
-    if (requiresGuest && routerAuthCheck) {  
+    if (requiresGuest && routerAuthCheck) {
         next({ name: "survey" }); 
     }
     next();

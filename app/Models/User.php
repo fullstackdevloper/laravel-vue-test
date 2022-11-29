@@ -23,6 +23,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'is_admin',
     ];
 
     /**
@@ -44,4 +45,8 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+
+    public function survey() {
+        return $this->hasMany('App\Models\Answer');
+    }
 }

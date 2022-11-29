@@ -1,5 +1,7 @@
 import { createStore } from "vuex"
 import auth from './Auth/index';
+import survey from './Survey/index';
+import user from './User/index';
 
 const state =  {
   userId: null
@@ -24,7 +26,9 @@ const store = createStore({
   mutations,
   actions,
   modules: {
-    auth
+    auth,
+    survey,
+    user
   }
 })
 

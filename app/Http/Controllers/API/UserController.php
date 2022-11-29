@@ -3,11 +3,15 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+
+use App\Http\Requests\Auth\LoginRequest;
+use App\Http\Requests\Auth\RegisterRequest;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
-use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+use App\Http\Resources\UserResource;
+
+use App\Models\User;
 
 class UserController extends Controller
 {
@@ -16,14 +20,9 @@ class UserController extends Controller
      * @param Request $request
      * @return User
      */
-    public function login(Request $request)
+    public function login(LoginRequest $request)
     {
-        $request->validate([
-            'email' => 'required|string|email',
-            'password' => 'required|string'
-        ]);
-
-        $credentials = request(['email', 'password']);
+        $credentials = $request->only(['email', 'password']);
 
         if (!Auth::attempt($credentials)) {
             return response()->json([
@@ -33,8 +32,13 @@ class UserController extends Controller
 
         $user = $request->user();
 
-        $tokenResult = $user->createToken('API TOKEN');
+        if($user->is_admin) {
+            return response()->json([
+                'message' => 'Unauthorized'
+            ], 401);
+        }
 
+        $tokenResult = $user->createToken('API TOKEN');
         $token = $tokenResult->accessToken;
 
         if ($request->remember_me) {
@@ -58,26 +62,35 @@ class UserController extends Controller
      * @param Request $request
      * @return User 
      */
-    public function register(Request $request)
+    public function register(RegisterRequest $request)
     {
         try {
-            //Validated
-            $request->validate([
-                'name' => 'required',
-                'email' => 'required|email|unique:users,email',
-                'password' => 'required'
-            ]);
-
             $user = User::create([
                 'name' => $request->name,
                 'email' => $request->email,
-                'password' => Hash::make($request->password)
+                'password' => Hash::make($request->password),
+                'is_admin' => 0,
             ]);
+
+            $tokenResult = $user->createToken('API TOKEN');
+
+            $token = $tokenResult->accessToken;
+
+            if ($request->remember_me) {
+                $token->expires_at = Carbon::now()->addWeeks(10);
+            }
+
+            $token->save();
 
             return response()->json([
                 'status' => true,
                 'message' => 'User Created Successfully',
-                'token' => $user->createToken("API TOKEN")->plainTextToken
+                'access_token' => $token->token,
+                'token_type' => 'Bearer',
+                'expires_at' =>  Carbon::parse(
+                    $token->expires_at
+                )
+                    ->toDateTimeString()
             ], 200);
         } catch (\Exception $e) {
             return response()->json([
@@ -85,5 +98,15 @@ class UserController extends Controller
                 'message' => $e->getMessage()
             ]);
         }
+    }
+
+    /**
+     * get User
+     * @param Request $request
+     * @return User 
+     */
+    public function user()
+    {
+        return new UserResource(Auth::user());
     }
 }

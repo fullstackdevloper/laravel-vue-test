@@ -8,6 +8,7 @@
             <div class="col-md-6 bg-white p-5">
                 <h3 class="pb-3">Login</h3>
                 <div class="form-style">
+                    <div v-if="authError" class="text-danger pb-1">{{ authError }}</div>
                     <form>
                         <div class="form-group pb-3">
                             <input type="email" placeholder="Email" class="form-control" id="email"
@@ -40,7 +41,7 @@
  
 <script>
 import form from 'vuejs-form'
-import { mapMutations } from 'vuex'
+import { mapMutations, mapActions, mapGetters } from 'vuex'
 
 export default {
     data: () => ({
@@ -58,29 +59,33 @@ export default {
                 'email.email': 'Email field must be an email',
             }),
     }),
+    computed: {
+        ...mapGetters('auth', ['authError', 'isAuthenticated']),
+    },
 
     watch: {
         ['form.data']: {
             deep: true,
             immediate: false,
             handler: 'onFormChange'
+        },
+        isAuthenticated(newValue) {
+            if (newValue) {
+                this.$router.push('/survey');
+            }
         }
     },
 
     methods: {
         ...mapMutations('auth', ['setAuth']),
+        ...mapActions('auth', ['userLogin']),
         onFormChange(after, before) {
             this.form.validate();
         },
         login() {
             if (this.form.validate().errors().any()) return;
 
-            if (this.form.email == 'admin@gmail.com' && this.form.password == '12345678') {
-                let date  = new Date();
-                let time = date.getTime();
-                this.setAuth({ token: '12345678', 'expires_at': 24 * 60 * 60 * 60 + time });
-                this.$router.push('/survey');
-            }
+            this.userLogin({ 'email': this.form.email, 'password': this.form.password });
         }
     },
 }
@@ -89,6 +94,7 @@ export default {
 body {
     background: #c9ccd1;
 }
+
 div#app {
     height: 100vh;
     width: 100%;
@@ -102,6 +108,7 @@ div#app {
     width: 100%;
     object-fit: cover;
 }
+
 .form-style input {
     border: 0;
     height: 50px;

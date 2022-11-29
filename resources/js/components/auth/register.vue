@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div class="row m-5 no-gutters shadow-lg align-items-center rounded">
-      <div class="col-md-6 d-none d-md-block">
+      <div class="col-md-6 ps-0 d-none d-md-block">
         <img
           src="https://images.unsplash.com/photo-1566888596782-c7f41cc184c5?ixlib=rb-1.2.1&auto=format&fit=crop&w=2134&q=80"
           class="img-fluid" style="min-height:100%;" />
@@ -9,6 +9,8 @@
       <div class="col-md-6 bg-white p-5">
         <h3 class="pb-3">Sign Up</h3>
         <div class="form-style">
+          <div v-if="authError" class="text-danger pb-1">{{ authError }}</div>
+
           <form>
             <div class="form-group pb-3">
               <input type="text" placeholder="Name" class="form-control" id="name" aria-describedby="name"
@@ -49,6 +51,7 @@
   
 <script>
 import form from 'vuejs-form'
+import { mapMutations, mapActions, mapGetters } from 'vuex'
 
 export default {
   data: () => ({
@@ -70,20 +73,32 @@ export default {
       }),
   }),
 
+  computed: {
+    ...mapGetters('auth', ['authError', 'isAuthenticated']),
+  },
+
   watch: {
     ['form.data']: {
       deep: true,
       immediate: false,
       handler: 'onFormChange'
+    },
+    isAuthenticated(newValue) {
+      if (newValue) {
+        this.$router.push('/survey');
+      }
     }
   },
 
   methods: {
+    ...mapActions('auth', ['userRegister']),
     onFormChange(after, before) {
       this.form.validate();
     },
     register() {
       if (this.form.validate().errors().any()) return;
+
+      this.userRegister({ 'name': this.form.name, 'email': this.form.email, 'password': this.form.password });
     }
   },
 }
@@ -93,17 +108,19 @@ export default {
 body {
   background: #c9ccd1;
 }
+
 div#app {
-    height: 100vh;
-    width: 100%;
-    position: relative;
-    display: flex;
-    align-items: center;
+  height: 100vh;
+  width: 100%;
+  position: relative;
+  display: flex;
+  align-items: center;
 }
+
 #app img {
-    max-height: 600px;
-    width: 100%;
-    object-fit: cover;
+  max-height: 600px;
+  width: 100%;
+  object-fit: cover;
 }
 
 .form-style input {
