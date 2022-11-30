@@ -15,25 +15,25 @@ use App\Http\Controllers\Admin\ChartController;
 |
 */
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
 
-Route::group(['middleware' => ['auth', 'isAdmin']], function() {
-    Route::get('/dashboard', function () { return view('dashboard'); })->name('dashboard');
-    Route::group(['prefix' => 'users', 'controller' => UsersController::class], function() {
+Route::group(['middleware' => ['auth', 'isAdmin']], function () {
+    Route::get('/dashboard', function () {
+        return view('dashboard');
+    })->name('dashboard');
+    Route::group(['prefix' => 'users', 'controller' => UsersController::class], function () {
         Route::get('', 'index')->name('users.index');
         Route::get('{user}', 'show')->name('users.show');
     });
-    Route::group(['prefix' => 'charts', 'controller' => ChartController::class], function() {
+    Route::group(['prefix' => 'charts', 'controller' => ChartController::class], function () {
         Route::get('', 'index')->name('charts.index');
     });
 });
 
-Route::get('/', function () {return view('welcome');});
+Route::get('/', function () {
+    return view('welcome');
+});
 
 Route::get('{any}', function () {
-    return view('index'); 
+    return view('index');
 })->where('any', '.*');
-
-
-
-
