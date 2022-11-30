@@ -20,7 +20,7 @@ class QuestionSeeder extends Seeder
         $questions = [
             [
                 'name' => "Which animal is known as the 'Ship of the Desert'?",
-                'answer' => 'Dog',
+                'answer' => 'Camel',
                 'options' => ['Dog', 'Camel', 'Elephant', 'Cat', 'Lion']
             ],
             [
@@ -30,12 +30,12 @@ class QuestionSeeder extends Seeder
             ],
             [
                 'name' => "How many hours are there in a day?",
-                'answer' => '7 hours',
+                'answer' => '24 hours',
                 'options' => ['7 hours', '12 hours', '24 hours', '36 hours', '48 hours']
             ],
             [
                 'name' => "How many letters are there in the English alphabet?",
-                'answer' => '21 letters',
+                'answer' => '26 letters',
                 'options' => ['21 letters', '24 letters', '26 letters', '24 letters', '51 letters']
             ],
             [
@@ -50,23 +50,23 @@ class QuestionSeeder extends Seeder
             ],
             [
                 'name' => "How many minutes are there in an hour?",
-                'answer' => '63 minutes',
+                'answer' => '60 minutes',
                 'options' => ['63 minutes', '60 minutes', '65 minutes', '69 minutes', '70 minutes']
             ],
             [
                 'name' => "How many seconds are there in a minute?",
-                'answer' => '30 seconds',
+                'answer' => '60 seconds',
                 'options' => ['30 seconds', '50 seconds', '60 seconds', '90 seconds', '40 seconds']
             ],
             [
                 'name' => "How many seconds make one hour?",
-                'answer' => '1200 seconds',
+                'answer' => '3600 seconds',
                 'options' => ['1200 seconds', '2400 seconds', '3600 seconds', '4800 seconds', '7200 seconds']
             ],
             [
                 'name' => "How many consonants are there in the English alphabet?",
-                'answer' => '16 Consonants',
-                'options' => ['16 Consonants', '25 Consonants', '23 Consonants', '26 Consonants', '27 Consonants']
+                'answer' => '24 Consonants',
+                'options' => ['24 Consonants', '25 Consonants', '23 Consonants', '26 Consonants', '27 Consonants']
             ],
         ];
 
