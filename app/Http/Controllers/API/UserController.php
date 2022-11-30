@@ -32,7 +32,7 @@ class UserController extends Controller
 
         $user = $request->user();
 
-        if($user->is_admin) {
+        if ($user->is_admin) {
             return response()->json([
                 'message' => 'Unauthorized'
             ], 401);
@@ -41,7 +41,7 @@ class UserController extends Controller
         $tokenResult = $user->createToken('API TOKEN');
         $token = $tokenResult->accessToken;
 
-        $token->expires_at = $request->remember_me ? Carbon::now()->addWeeks(10): Carbon::now()->addDays(1);
+        $token->expires_at = $request->remember_me ? Carbon::now()->addWeeks(10) : Carbon::now()->addDays(1);
 
         $token->save();
 
@@ -71,12 +71,9 @@ class UserController extends Controller
             ]);
 
             $tokenResult = $user->createToken('API TOKEN');
-
             $token = $tokenResult->accessToken;
 
-            if ($request->remember_me) {
-                $token->expires_at = Carbon::now()->addWeeks(10);
-            }
+            $token->expires_at = $request->remember_me ? Carbon::now()->addWeeks(10) : Carbon::now()->addDays(1);
 
             $token->save();
 
