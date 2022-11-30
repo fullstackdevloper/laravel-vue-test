@@ -12,6 +12,9 @@ const mutations = {
   },
   surveyError(state, message) {
     state.error = message;
+  },
+  resetUser(state) {
+    state.user = ''
   }
 };
 
@@ -26,8 +29,9 @@ const getters = {
 
 const actions = {
   fetchUserDetail({ commit, state }) {
+    commit('resetUser');  
     user().then(function (response) {
-      commit('setUser', response.data);
+      commit('setUser', response.data);  
     }).catch(function (error) {
       if (error.response.status == 401) {
       }
