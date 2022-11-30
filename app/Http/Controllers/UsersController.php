@@ -30,7 +30,7 @@ class UsersController extends Controller
             $dir  =  $request->input('order.0.dir');
             $search = $request->input('search.value'); 
            
-            $users = User::offset($start)
+            $users = User::where('is_admin',0)->offset($start)
                                 ->limit($limit)
                                 ->orderBy($order,$dir);
             

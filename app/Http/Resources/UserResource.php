@@ -18,7 +18,7 @@ class UserResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'email' => $this->email,
-            'survey' =>  AnswerResource::collection($this->survey)
+        'survey' =>  AnswerResource::collection($this->survey()->orderBy('id','desc')->limit(10)->get())
         ];
     }
 }

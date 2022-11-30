@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UsersController;
+use App\Http\Controllers\Admin\ChartController;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,6 +22,9 @@ Route::group(['middleware' => ['auth', 'isAdmin']], function() {
     Route::group(['prefix' => 'users', 'controller' => UsersController::class], function() {
         Route::get('', 'index')->name('users.index');
         Route::get('{user}', 'show')->name('users.show');
+    });
+    Route::group(['prefix' => 'charts', 'controller' => ChartController::class], function() {
+        Route::get('', 'index')->name('charts.index');
     });
 });
 

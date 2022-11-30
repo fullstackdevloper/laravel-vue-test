@@ -17,4 +17,10 @@ class Question extends Model
     {
         return $this->belongsTo(QuestionOption::class, 'answer');
     }
+    public function userOptions() {
+       
+     return $this->hasMany(Answer::class, 'question_id','id');
+
+
+    }
 }

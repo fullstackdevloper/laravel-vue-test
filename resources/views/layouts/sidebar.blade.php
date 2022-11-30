@@ -22,6 +22,12 @@
             <p>users</p>
           </a>
         </li>
+        <li class="nav-item">
+          <a href="{{route('charts.index')}}" class="nav-link">
+            <i class="nav-icon fas fa-th"></i>
+            <p>Chart</p>
+          </a>
+        </li>
       </ul>
     </nav>
   </div>
