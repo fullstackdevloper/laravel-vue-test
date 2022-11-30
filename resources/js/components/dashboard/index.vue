@@ -14,35 +14,33 @@
                 </div>
             </div>
             <div class="row">
-                <!-- <template> -->
-                <div class="col-xs-6 col-sm-6 col-md-3 col-lg-2 p-2">
-                    <a class="text-decoration-none" href="#" @click="activeTab = 'survey'">
-                        <div class="card p-3 shadow bg-light text-center border-0">
-                            <div class="card-body">
-                                <i class="fa fa-edit fa-2x" aria-hidden="true"></i>
-                                <hr />
-                                <p class="card-title lead">Survey</p>
+                <template v-if="1 == 2">
+                    <div class="col-xs-6 col-sm-6 col-md-3 col-lg-2 p-2">
+                        <a class="text-decoration-none" href="#" @click="activeTab = 'survey'">
+                            <div class="card p-3 shadow bg-light text-center border-0">
+                                <div class="card-body">
+                                    <i class="fa fa-edit fa-2x" aria-hidden="true"></i>
+                                    <hr />
+                                    <p class="card-title lead">Survey</p>
+                                </div>
                             </div>
-                        </div>
-                    </a>
-                </div>
-                <div class="col-xs-6 col-sm-6 col-md-3 col-lg-2 p-2">
-                    <a class="text-decoration-none" href="#" @click="activeTab = 'result'">
-                        <div class="card p-3 shadow bg-light text-center border-0">
-                            <div class="card-body">
-                                <i class="fa fa-image fa-2x" aria-hidden="true"></i>
-                                <hr />
-                                <p class="card-title lead">Result</p>
+                        </a>
+                    </div>
+                    <div class="col-xs-6 col-sm-6 col-md-3 col-lg-2 p-2">
+                        <a class="text-decoration-none" href="#" @click="activeTab = 'result'">
+                            <div class="card p-3 shadow bg-light text-center border-0">
+                                <div class="card-body">
+                                    <i class="fa fa-image fa-2x" aria-hidden="true"></i>
+                                    <hr />
+                                    <p class="card-title lead">Result</p>
+                                </div>
                             </div>
-                        </div>
-                    </a>
-                </div>
-                <!-- </template> -->
-                <template v-if="activeTab == 'survey'">
-                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 p-2 mb-8">
-                        <survey @cancel="activeTab = ''" @sumited="submitSurvey" />
+                        </a>
                     </div>
                 </template>
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 p-5 mb-8">
+                    <survey @cancel="activeTab = ''" @sumited="submitSurvey" />
+                </div>
             </div>
         </div>
 

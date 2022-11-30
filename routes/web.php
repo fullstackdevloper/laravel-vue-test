@@ -16,7 +16,7 @@ use App\Http\Controllers\UsersController;
 
 require __DIR__.'/auth.php';
 
-Route::group(['middleware' => 'auth'], function() {
+Route::group(['middleware' => ['auth', 'isAdmin']], function() {
     Route::get('/dashboard', function () { return view('dashboard'); })->name('dashboard');
     Route::group(['prefix' => 'users', 'controller' => UsersController::class], function() {
         Route::get('', 'index')->name('users.index');
