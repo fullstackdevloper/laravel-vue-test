@@ -14,7 +14,7 @@
                 </div>
             </div>
             <div class="row">
-                <template v-if="!authUser.survey.length">
+                <template v-if="authUser.survey && !authUser.survey.length">
                     <div class="col-xs-6 col-sm-6 col-md-3 col-lg-2 p-2">
                         <a class="text-decoration-none" href="#" @click="activeTab = 'survey'">
                             <div class="card p-3 shadow bg-light text-center border-0">

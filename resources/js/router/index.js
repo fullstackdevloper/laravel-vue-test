@@ -41,20 +41,22 @@ router.beforeEach((to, from, next) => {
     const requiresAuth = to.matched.some((x) => x.meta.auth);
     const requiresGuest = to.matched.some((x) => x.meta.requiresGuest);
   
-    let routerAuthCheck = false;
+    let tokenExpired = true;
   
     if (localStorage.getItem('token') && localStorage.getItem('expires_at')) {
       const expiresAt = localStorage.getItem('expires_at') ? localStorage.getItem('expires_at') : 0;
-      routerAuthCheck = new Date().getTime() >= new Date(expiresAt);
+      tokenExpired = new Date().getTime() >= new Date(expiresAt).getTime();
     }
   
     if (requiresAuth) {
-      if (!routerAuthCheck) {
+      if (tokenExpired) {
+        localStorage.removeItem('token')
+        localStorage.removeItem('expires_at')
         next({ name: "login" })
       }
     }
   
-    if (requiresGuest && routerAuthCheck) {
+    if (requiresGuest && !tokenExpired) {
         next({ name: "survey" }); 
     }
     next();
