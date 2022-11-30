@@ -14,35 +14,33 @@
                 </div>
             </div>
             <div class="row">
-                <template v-if="authUser.survey && !authUser.survey.length">
-                    <div class="col-xs-6 col-sm-6 col-md-3 col-lg-2 p-2">
-                        <a class="text-decoration-none" href="#" @click="activeTab = 'survey'">
-                            <div class="card p-3 shadow bg-light text-center border-0">
-                                <div class="card-body">
-                                    <i class="fa fa-edit fa-2x" aria-hidden="true"></i>
-                                    <hr />
-                                    <p class="card-title lead">Survey</p>
-                                </div>
+                <!-- <template> -->
+                <div class="col-xs-6 col-sm-6 col-md-3 col-lg-2 p-2">
+                    <a class="text-decoration-none" href="#" @click="activeTab = 'survey'">
+                        <div class="card p-3 shadow bg-light text-center border-0">
+                            <div class="card-body">
+                                <i class="fa fa-edit fa-2x" aria-hidden="true"></i>
+                                <hr />
+                                <p class="card-title lead">Survey</p>
                             </div>
-                        </a>
-                    </div>
-                </template>
-                <template v-else>
-                    <div class="col-xs-6 col-sm-6 col-md-3 col-lg-2 p-2">
-                        <a class="text-decoration-none" href="#" @click="activeTab = 'result'">
-                            <div class="card p-3 shadow bg-light text-center border-0">
-                                <div class="card-body">
-                                    <i class="fa fa-image fa-2x" aria-hidden="true"></i>
-                                    <hr />
-                                    <p class="card-title lead">Result</p>
-                                </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-xs-6 col-sm-6 col-md-3 col-lg-2 p-2">
+                    <a class="text-decoration-none" href="#" @click="activeTab = 'result'">
+                        <div class="card p-3 shadow bg-light text-center border-0">
+                            <div class="card-body">
+                                <i class="fa fa-image fa-2x" aria-hidden="true"></i>
+                                <hr />
+                                <p class="card-title lead">Result</p>
                             </div>
-                        </a>
-                    </div>
-                    </template>
+                        </div>
+                    </a>
+                </div>
+                <!-- </template> -->
                 <template v-if="activeTab == 'survey'">
-                    <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 p-2 mb-8">
-                        <survey />
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 p-2 mb-8">
+                        <survey @cancel="activeTab = ''" @sumited="submitSurvey" />
                     </div>
                 </template>
             </div>
@@ -65,6 +63,7 @@ export default {
     data: () => ({
         loading: false,
         activeTab: '',
+        submited: false
     }),
     components: {
         survey
@@ -94,6 +93,20 @@ export default {
         logout() {
             this.removeAuth();
             this.$router.push('/login');
+            this.$notify({
+                title: 'Logout',
+                text: 'User Logout successfully',
+                type: 'warn',
+            });
+        },
+        submitSurvey() {
+            this.submited = true;
+            this.activeTab = '';
+            this.$notify({
+                title: 'Survey',
+                text: 'Survey submited successfully',
+                type: 'success',
+            });
         }
     },
 }

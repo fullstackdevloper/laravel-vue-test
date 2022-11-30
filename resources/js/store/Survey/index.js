@@ -16,7 +16,7 @@ const mutations = {
 };
 
 const getters = {
-  questions(state) {
+  getQuestions(state) {
     return state.questions
   },
   surveyError(state) {
