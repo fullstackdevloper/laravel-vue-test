@@ -8,19 +8,19 @@ use Illuminate\Database\Eloquent\Model;
 class Question extends Model
 {
     use HasFactory;
-    protected $fillable = ['name','answer'];
+    protected $fillable = ['name', 'answer'];
 
-    public function options() {
+    public function options()
+    {
         return $this->hasMany('App\Models\QuestionOption');
     }
     public function answers()
     {
         return $this->belongsTo(QuestionOption::class, 'answer');
     }
-    public function userOptions() {
-       
-     return $this->hasMany(Answer::class, 'question_id','id');
+    public function userOptions()
+    {
 
-
+        return $this->hasMany(Answer::class, 'question_id', 'id');
     }
 }

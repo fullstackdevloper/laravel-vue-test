@@ -4,6 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 use App\Http\Resources\AnswerResource;
+
 class UserResource extends JsonResource
 {
     /**
@@ -18,7 +19,7 @@ class UserResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'email' => $this->email,
-        'survey' =>  AnswerResource::collection($this->survey()->orderBy('id','desc')->limit(10)->get())
+            'survey' =>  AnswerResource::collection($this->survey()->orderBy('id', 'desc')->limit(10)->get())
         ];
     }
 }

@@ -15,62 +15,60 @@ class UsersController extends Controller
      */
     public function index(Request $request)
     {
-        
+
         $columns = [
-            0 =>'name',
+            0 => 'name',
             1 => 'email',
             2 => 'created_at',
             3 => 'id',
         ];
-        
-        if($request->ajax()) {
+
+        if ($request->ajax()) {
             $limit = $request->length;
             $start = $request->start;
             $order = $columns[$request->input('order.0.column')];
             $dir  =  $request->input('order.0.dir');
-            $search = $request->input('search.value'); 
-           
-            $users = User::where('is_admin',0)->offset($start)
-                                ->limit($limit)
-                                ->orderBy($order,$dir);
-            
-            if($search){            
-                $users = $users->where(function($query) use($search){
+            $search = $request->input('search.value');
+
+            $users = User::where('is_admin', 0)->offset($start)
+                ->limit($limit)
+                ->orderBy($order, $dir);
+
+            if ($search) {
+                $users = $users->where(function ($query) use ($search) {
                     $query->where('name', 'LIKE', "%{$search}%");
                     $query->orWhere('email', 'LIKE', "%{$search}%");
-                 });
+                });
             }
-            
-            
-            
+
+
+
             $users = $users->get();
-            
+
             $data = [];
-       
-            if(!empty($users))
-            {   $totalData = User::count();
-            
-                $totalFiltered = $totalData; 
-                
-                foreach ($users as $user)
-                {
-                    $show =  route('users.show',$user->id);
+
+            if (!empty($users)) {
+                $totalData = User::count();
+
+                $totalFiltered = $totalData;
+
+                foreach ($users as $user) {
+                    $show =  route('users.show', $user->id);
 
                     $nestedData['id'] = $user->id;
                     $nestedData['name'] = $user->name;
                     $nestedData['email'] = $user->email;
-                    $nestedData['created_at'] = date('j M Y h:i a',strtotime($user->created_at));
+                    $nestedData['created_at'] = date('j M Y h:i a', strtotime($user->created_at));
                     $nestedData['action'] = "&emsp;<a href='{$show}' title='SHOW' ><span class='glyphicon glyphicon-list'></span>view</a>";
                     $data[] = $nestedData;
-
                 }
             }
             $json_data = array(
-                "draw"            => intval($request->input('draw')),  
-                "recordsTotal"    => intval($totalData),  
-                "recordsFiltered" => intval($totalFiltered), 
-                "data"            => $data   
-                );
+                "draw"            => intval($request->input('draw')),
+                "recordsTotal"    => intval($totalData),
+                "recordsFiltered" => intval($totalFiltered),
+                "data"            => $data
+            );
             return response()->Json($json_data);
         }
         return view('user.index');
