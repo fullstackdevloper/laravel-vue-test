@@ -15,7 +15,7 @@
                         </div>
                         <div class="col-xs-6 col-sm-6 col-md-3 col-lg-2 p-2">
                             <button type="button" class="btn btn-danger w-100 font-weight-bold mt-2"
-                                @click='cancel'>Cancel</button>
+                                @click='cancel'>Reset</button>
                         </div>
                     </div>
                 </template>
@@ -25,13 +25,13 @@
                             <button type="button" class="btn btn-dark w-100 font-weight-bold mt-2"
                                 @click='submit' :disabled="disabledButton.length">Submit</button>
                         </div>
-                        <div class="col-xs-4 col-sm-3 col-md-2 col-lg-1 p-2">
+                        <!-- <div class="col-xs-4 col-sm-3 col-md-2 col-lg-1 p-2">
                             <button type="button" class="btn btn-warning w-100 font-weight-bold mt-2"
                                 @click='showAll= false'>Back</button>
-                        </div>
+                        </div> -->
                         <div class="col-xs-4 col-sm-3 col-md-2 col-lg-1 p-2">
                             <button type="button" class="btn btn-danger w-100 font-weight-bold mt-2"
-                                @click='cancel'>Cancel</button>
+                                @click='cancel'>Reset</button>
                         </div>
                     </div>
                 </template>

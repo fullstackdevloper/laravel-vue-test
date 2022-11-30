@@ -25,7 +25,7 @@
                         </div>
                         <div class="pb-2">
                             <button type="button" class="btn btn-dark w-100 font-weight-bold mt-2"
-                                :disabled='form.empty()' @click='login'>Login</button>
+                                :disabled='form.empty()' @click='login'> Login </button>
                         </div>
                     </form>
                     <div class="pt-4 text-center">

@@ -3,6 +3,7 @@ import { createRouter, createWebHistory } from "vue-router";
 import login from '../components/auth/login.vue' 
 import register from '../components/auth/register.vue' 
 import survey from '../components/dashboard/index.vue' 
+import result from '../components/dashboard/result.vue' 
 
 const routes = [
     {
@@ -25,6 +26,14 @@ const routes = [
         path: '/survey',
         name: 'survey',
         component: survey,
+        meta: {
+            auth: true
+        }
+    },
+    {
+        path: '/result',
+        name: 'result',
+        component: result,
         meta: {
             auth: true
         }
