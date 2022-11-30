@@ -10,7 +10,20 @@ class Answer extends Model
     use HasFactory;
     protected $fillable = ['user_id', 'question_id', 'option_id'];
 
-    public function question() {
-        return $this->belongsTo('App\Models\Question');
+
+    public function question()
+    {
+        return $this->belongsTo(Question::class, 'question_id');
+    }
+    public function option()
+    {
+        return $this->belongsTo(QuestionOption::class, 'option_id');
+    }
+    public  function answerType(){
+        if($this->question->answer == $this->option_id){
+            return true;
+        }
+        return false;
+
     }
 }
